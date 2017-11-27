@@ -29,40 +29,31 @@ window.renderStatistics = function (ctx, names, times) {
     }
   };
   getMaxTime(times);
-  // drow time bars according to times arrayl
+  var opacity;
+  var calcOpacity = function () {
+    opacity = Math.random().toFixed(1);
+    return opacity;
+  };
+  // drow time bars according to times array
+
   var drowHistogram = function (arr) {
-    var histogramHeight = 150; // px
-    var columnWidth = 40; // px
-    var columnSpace = 50; // px
-    var initialX = 160;
-    var initialY = 80;
-    var offset = 10; // px
-    var step = histogramHeight / (maxTime + 250);
-    // Math.random() can return to low vaule so a bar can be slightly visible, this function will add 0.1 to the low value
-    var opacity;
-    var calcOpacity = function () {
-      opacity = Math.random();
-      // this does not work - return (opacity < 0.1) ? opacity += 0.1 : opacity;
-      if (opacity < 0.1) {
-        opacity = opacity + 0.1;
-        return opacity;
-      } else {
-        return opacity;
-      }
-    };
-    // drow bars and time
+    var HISTOGRAM_HEIGHT = 150; // px
+    var COLUMN_WIDTH = 40; // px
+    var COLUMN_SPACE = 50; // px
+    var INITIAL_X = 160;
+    var INITIAL_Y = 80;
+    var OFFSET = 10; // px
+    var step = HISTOGRAM_HEIGHT / (maxTime + 250);
+    var PLAYER_COLOR = 'rgba(255, 0, 0, 1)';
+    var RECORDS_COLOR = 'rgba(0, 0, 255,' + calcOpacity() + ')';
+
     for (var i = 0; i < arr.length; i++) {
-      // ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255,' + Math.random() + ')';
-      ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255,' + calcOpacity() + ')';
-      ctx.fillRect(initialX + i * (columnWidth + columnSpace), initialY + (histogramHeight - arr[i] * step), columnWidth, arr[i] * step);
+      ctx.fillStyle = (names[i] === 'Вы') ? PLAYER_COLOR : RECORDS_COLOR;
+      ctx.fillRect(INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y + (HISTOGRAM_HEIGHT - arr[i] * step), COLUMN_WIDTH, arr[i] * step);
       var matchTime = Math.round(times[i]);
       ctx.fillStyle = '#000000';
-      ctx.fillText(matchTime, initialX + i * (columnWidth + columnSpace), initialY - offset + (histogramHeight - arr[i] * step));
-    }
-    // display name
-    for (var j = 0; j < arr.length; j++) {
-      ctx.fillStyle = '#000000';
-      ctx.fillText(names[j], initialX + j * (columnWidth + columnSpace), initialY + 2 * offset + histogramHeight);
+      ctx.fillText(matchTime, INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y - OFFSET + (HISTOGRAM_HEIGHT - arr[i] * step));
+      ctx.fillText(names[i], INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y + 2 * OFFSET + HISTOGRAM_HEIGHT);
     }
   };
   drowHistogram(times);
