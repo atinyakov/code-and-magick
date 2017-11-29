@@ -10,14 +10,14 @@ window.renderStatistics = function (ctx, names, times) {
   drawRect(110, 20, 420, 270, 'rgba(0, 0, 0, 0.7)');
   drawRect(100, 10, 420, 270, '#FFFFFF');
   // funct to print text on canvas
-  var drowText = function (text, x, y, color) {
+  var drawText = function (text, x, y, color) {
     ctx.fillStyle = color ? color : 'black';
     ctx.font = '16px PT Mono';
     ctx.fillText(text, x, y);
   };
   // display text on canvas
-  drowText('Ура вы победили!', 120, 40);
-  drowText('Список результатов', 120, 60);
+  drawText('Ура вы победили!', 120, 40);
+  drawText('Список результатов', 120, 60);
   // find max time for drowHistogram
   var maxTime;
   var getMaxTime = function (arr) {
