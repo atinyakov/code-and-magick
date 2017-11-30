@@ -36,7 +36,7 @@ window.renderStatistics = function (ctx, names, times) {
   };
   // drow time bars according to times array
 
-  var drowHistogram = function (arr) {
+  var drawHistogram = function (arr) {
     var HISTOGRAM_HEIGHT = 150; // px
     var COLUMN_WIDTH = 40; // px
     var COLUMN_SPACE = 50; // px
@@ -46,15 +46,13 @@ window.renderStatistics = function (ctx, names, times) {
     var step = HISTOGRAM_HEIGHT / (maxTime + 250);
     var PLAYER_COLOR = 'rgba(255, 0, 0, 1)';
     var RECORDS_COLOR = 'rgba(0, 0, 255,' + calcOpacity() + ')';
-
     for (var i = 0; i < arr.length; i++) {
       ctx.fillStyle = (names[i] === 'Вы') ? PLAYER_COLOR : RECORDS_COLOR;
-      ctx.fillRect(INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y + (HISTOGRAM_HEIGHT - arr[i] * step), COLUMN_WIDTH, arr[i] * step);
+      drawRect(INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y + (HISTOGRAM_HEIGHT - arr[i] * step), COLUMN_WIDTH, arr[i] * step, ctx.fillStyle);
       var matchTime = Math.round(times[i]);
-      ctx.fillStyle = '#000000';
-      ctx.fillText(matchTime, INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y - OFFSET + (HISTOGRAM_HEIGHT - arr[i] * step));
-      ctx.fillText(names[i], INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y + 2 * OFFSET + HISTOGRAM_HEIGHT);
+      drawText(matchTime, INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y - OFFSET + (HISTOGRAM_HEIGHT - arr[i] * step), '#000000');
+      drawText(names[i], INITIAL_X + i * (COLUMN_WIDTH + COLUMN_SPACE), INITIAL_Y + 2 * OFFSET + HISTOGRAM_HEIGHT, '#000000');
     }
   };
-  drowHistogram(times);
+  drawHistogram(times);
 };
