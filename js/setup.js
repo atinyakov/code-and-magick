@@ -92,3 +92,50 @@ var removeClassHide = function () {
 };
 
 removeClassHide();
+
+var setupOpen = document.querySelector('.setup-open');
+var setup = document.querySelector('.setup');
+var nameBox = setup.querySelector('.setup-user-name');
+var setupClose = setup.querySelector('.setup-close');
+var setupSubmit = setup.querySelector('.setup-submit');
+
+var onPopupPressEsc = function (evt) {
+  if (evt.keyCode === 27 && evt.target !== nameBox) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupPressEsc);
+};
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupPressEsc);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    openPopup();
+  }
+});
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    closePopup();
+  }
+});
+
+setupSubmit.addEventListener('click', function () {
+  closePopup();
+});
+setupSubmit.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    closePopup();
+  }
+});
