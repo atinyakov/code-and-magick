@@ -1,6 +1,4 @@
 'use strict';
-var removeClass = document.querySelector('.setup');
-removeClass.classList.remove('hidden');
 
 var NAME_LIST = [
   'Иван',
@@ -40,6 +38,16 @@ var EYES_COLOR = [
   'yellow',
   'green'
 ];
+
+var FIREBALL_COLOR = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
+
 var WIZARD_AMOUNT = 4;
 var randomInteger = function (min, max) {
   var rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -92,3 +100,70 @@ var removeClassHide = function () {
 };
 
 removeClassHide();
+// open/close form
+var setupOpen = document.querySelector('.setup-open');
+var setup = document.querySelector('.setup');
+var nameBox = setup.querySelector('.setup-user-name');
+var setupClose = setup.querySelector('.setup-close');
+var setupSubmit = setup.querySelector('.setup-submit');
+
+var onPopupPressEsc = function (evt) {
+  if (evt.keyCode === 27 && evt.target !== nameBox) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupPressEsc);
+};
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupPressEsc);
+};
+// open form on click
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+// open form by pressing enter
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    openPopup();
+  }
+});
+// close form on clicl
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+// close form on pressing enter
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    closePopup();
+  }
+});
+
+setupSubmit.addEventListener('click', function () {
+  closePopup();
+});
+setupSubmit.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    closePopup();
+  }
+});
+// change eyes color on click
+var wizardOnPopup = document.querySelector('.setup-wizard');
+var eyes = wizardOnPopup.querySelector('.wizard-eyes');
+eyes.addEventListener('click', function () {
+  eyes.style.fill = EYES_COLOR[randomInteger(0, EYES_COLOR.length - 1)];
+});
+// change coat color on click
+var coat = wizardOnPopup.querySelector('.wizard-coat');
+coat.addEventListener('click', function () {
+  coat.style.fill = COAT_COLOR[randomInteger(0, COAT_COLOR.length - 1)];
+});
+// change fireball's color on click
+
+var fireball = document.querySelector('.setup-fireball-wrap');
+fireball.addEventListener('click', function () {
+  fireball.style.background = FIREBALL_COLOR[randomInteger(0, FIREBALL_COLOR.length - 1)];
+});
