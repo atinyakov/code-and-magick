@@ -116,4 +116,55 @@
   fireball.addEventListener('click', function () {
     fireball.style.background = FIREBALL_COLOR[randomInteger(0, FIREBALL_COLOR.length - 1)];
   });
+
+  // select artifacts tab from document
+  // var draggedItem = null;
+  // var shopElement = document.querySelectorAll('.setup-artifacts-shop');
+  // console.log(["0"].children
+  // if (shopElement['0'].childrenlength > 0) {
+  //   for (var i = 0; i < shopElement.length; i++) {
+  //     shopElement[i].setAttribute('draggable', true);
+  // shopElement[i].addEventListener('dragstart', function (evt) {
+  //   if (evt.target.tagName.toLowerCase() === 'img') {
+  //     draggedItem = evt.target;
+  //     evt.dataTransfer.setData('text/plain', evt.target.alt);
+  //     return draggedItem;
+  //   }
+  // });
+  //   }
+  // }
+
+  var shopElement = document.querySelector('.setup-artifacts-shop');
+  var draggedItem = null;
+
+  shopElement.addEventListener('dragstart', function (evt) {
+    // evt.dataTransfer.effectAllowed = 'copy';
+    if (evt.target.tagName.toLowerCase() === 'img') {
+      draggedItem = evt.target;
+      evt.dataTransfer.setData('text/plain', evt.target.alt);
+      artifactsElement.style.outline = '2px dashed red';
+    }
+  });
+  var artifactsElement = document.querySelector('.setup-artifacts');
+  artifactsElement.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+
+  artifactsElement.addEventListener('drop', function (evt) {
+    evt.target.style.backgroundColor = '';
+    evt.target.appendChild(draggedItem);
+    artifactsElement.style.outline = 'none';
+    evt.preventDefault();
+  });
+
+  artifactsElement.addEventListener('dragenter', function (evt) {
+    evt.target.style.backgroundColor = 'yellow';
+    evt.preventDefault();
+  });
+
+  artifactsElement.addEventListener('dragleave', function (evt) {
+    evt.target.style.backgroundColor = '';
+    evt.preventDefault();
+  });
 })();
