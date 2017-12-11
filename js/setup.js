@@ -98,56 +98,28 @@
   };
 
   removeClassHide();
+  var fillElement = function (element, color) {
+    element.style.fill = color;
+  };
 
   // change eyes color on click
   var wizardOnPopup = document.querySelector('.setup-wizard');
   var eyes = wizardOnPopup.querySelector('.wizard-eyes');
   eyes.addEventListener('click', function () {
-    eyes.style.fill = EYES_COLOR[randomInteger(0, EYES_COLOR.length - 1)];
+    window.colorizeElement(eyes, EYES_COLOR[randomInteger(0, EYES_COLOR.length - 1)], fillElement);
   });
   // change coat color on click
   var coat = wizardOnPopup.querySelector('.wizard-coat');
   coat.addEventListener('click', function () {
-    coat.style.fill = COAT_COLOR[randomInteger(0, COAT_COLOR.length - 1)];
+    window.colorizeElement(coat, COAT_COLOR[randomInteger(0, COAT_COLOR.length - 1)], fillElement);
   });
   // change fireball's color on click
+  var changeElementBackground = function (element, color) {
+    element.style.backgroundColor = color;
+  };
 
   var fireball = document.querySelector('.setup-fireball-wrap');
   fireball.addEventListener('click', function () {
-    fireball.style.background = FIREBALL_COLOR[randomInteger(0, FIREBALL_COLOR.length - 1)];
-  });
-
-  var shopElement = document.querySelector('.setup-artifacts-shop');
-  var draggedItem = null;
-
-  shopElement.addEventListener('dragstart', function (evt) {
-    // evt.dataTransfer.effectAllowed = 'copy';
-    if (evt.target.tagName.toLowerCase() === 'img') {
-      draggedItem = evt.target;
-      evt.dataTransfer.setData('text/plain', evt.target.alt);
-      artifactsElement.style.outline = '2px dashed red';
-    }
-  });
-  var artifactsElement = document.querySelector('.setup-artifacts');
-  artifactsElement.addEventListener('dragover', function (evt) {
-    evt.preventDefault();
-    return false;
-  });
-
-  artifactsElement.addEventListener('drop', function (evt) {
-    evt.target.style.backgroundColor = '';
-    evt.target.appendChild(draggedItem);
-    artifactsElement.style.outline = 'none';
-    evt.preventDefault();
-  });
-
-  artifactsElement.addEventListener('dragenter', function (evt) {
-    evt.target.style.backgroundColor = 'yellow';
-    evt.preventDefault();
-  });
-
-  artifactsElement.addEventListener('dragleave', function (evt) {
-    evt.target.style.backgroundColor = '';
-    evt.preventDefault();
+    window.colorizeElement(fireball, FIREBALL_COLOR[randomInteger(0, FIREBALL_COLOR.length - 1)], changeElementBackground);
   });
 })();
